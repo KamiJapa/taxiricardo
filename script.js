@@ -1,40 +1,17 @@
-const menuButton = document.querySelector('.menu-toggle');
-const navigation = document.querySelector('#navegacao');
+(() => {
+  const phone = document.documentElement.dataset.whatsappPhone || '5517981012405';
+  document.querySelectorAll('[data-wa]').forEach((link) => {
+    const message = link.dataset.message || 'Olá, Ricardo! Gostaria de agendar uma corrida pelo Táxi Aeroporto.';
+    link.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  });
 
-function setMenuOpen(open) {
-  if (!menuButton || !navigation) return;
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-  navigation.classList.toggle('is-open', open);
-  document.body.classList.toggle('menu-open', open);
-}
-
-menuButton?.addEventListener('click', () => {
-  setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
-});
-
-navigation?.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => setMenuOpen(false));
-});
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') setMenuOpen(false);
-});
-
-const revealItems = document.querySelectorAll('.reveal');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if ('IntersectionObserver' in window && !reducedMotion) {
-  const observer = new IntersectionObserver((entries, currentObserver) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        currentObserver.unobserve(entry.target);
-      }
+  document.querySelectorAll('.mobile-nav nav a').forEach((link) => {
+    link.addEventListener('click', () => {
+      const menu = link.closest('details');
+      if (menu && !link.hasAttribute('data-wa')) menu.open = false;
     });
-  }, { threshold: 0.12 });
-  revealItems.forEach((item) => observer.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add('is-visible'));
-}
+  });
 
+  const year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
+})();

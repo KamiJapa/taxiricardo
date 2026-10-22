@@ -1,26 +1,64 @@
-# Táxi Ricardo Aeroporto — demonstração
+# Táxi Aeroporto — Ricardo
 
-Landing page estática e não oficial para apresentar uma possibilidade de presença digital. O contato abre o WhatsApp confirmado com uma mensagem pré-preenchida; a página não agenda nem confirma corridas.
+Landing page estática para apresentação dos serviços e início de agendamentos pelo WhatsApp. Esta entrega é local e está pronta para revisão; não foi publicada.
 
-## Abrir localmente
+## Stack e estrutura
 
-O arquivo `styles.css` está incluído, então a página pode ser aberta diretamente por `index.html` ou servida por qualquer servidor estático. A página não faz chamadas a scripts, fontes ou imagens externas.
+- HTML semântico, CSS responsivo e JavaScript sem framework.
+- Tailwind CSS 3.4.17 para build de utilitários; estilos de apresentação próprios em `styles.css`.
+- Node.js para build e testes estáticos.
+- `assets/photos/`: derivações WebP das três fotos fornecidas. Placas borradas e metadados removidos localmente. Os originais não foram alterados nem copiados para o projeto.
+- `src/input.css`: entrada Tailwind.
+- `tests/static.test.mjs`: verificações estáticas de conteúdo, links, arquivos e requisitos básicos.
+- `index.html`, `privacidade.html` e `404.html`: páginas do site.
+- `RELATORIO_VALIDACAO_FINAL_RICARDO.md`: resultados e pendências desta revisão.
 
-## Reconstruir o CSS Tailwind
+## Requisitos
 
-Com Node.js e acesso ao registro npm, execute `npm install` e depois `npm run build`. O comando gera `styles.css` a partir de `src/input.css` e das classes usadas na página. A configuração está em `tailwind.config.js`.
+- Node.js 20 ou superior.
+- npm 10 ou superior.
 
-## Publicação temporária gratuita
+## Instalação e execução local
 
-Envie os arquivos deste projeto a um serviço de hospedagem estática que ofereça endereço temporário (por exemplo, Netlify Drop ou GitHub Pages). Configure o serviço para servir `index.html` na raiz. Use somente o endereço temporário disponibilizado pela plataforma; nenhum domínio foi escolhido ou comprado. Não publique em nome do cliente sem autorização.
+```bash
+npm ci
+npm run dev
+```
 
-Esta demonstração inclui `noindex, nofollow` para desencorajar indexação. A hospedagem deve fornecer HTTPS; nenhuma configuração de hospedagem ou cabeçalho de segurança foi feita neste código ou validada antes de publicar.
+Sirva a pasta com qualquer servidor estático local. Não é necessário configurar credenciais ou serviços externos. Para gerar a folha Tailwind otimizada:
 
-## Estrutura
+```bash
+npm run build
+```
 
-- `index.html`: conteúdo semântico, metadados e SVG da composição visual.
-- `src/input.css`: entrada do Tailwind e estilos personalizados responsivos.
-- `styles.css`: CSS compilado para hospedar com a página.
-- `script.js`: menu mobile e entradas suaves respeitando movimento reduzido.
-- `tailwind.config.js` e `package.json`: configuração e build do CSS.
+**Limitação desta revisão:** o ambiente não conseguiu consultar `registry.npmjs.org` (`ENOTFOUND`) e não tinha metadados Tailwind no cache offline. Por isso, o `package-lock.json` ainda não foi gerado e `npm ci` não pode ser concluído aqui. O build foi executado com Tailwind já instalado no workspace pai; para instalação isolada, restaure o acesso ao registry, gere/valide o lockfile e repita `npm ci`.
 
+## Testes
+
+```bash
+npm run test:static
+```
+
+Playwright não está incluído como dependência porque não estava disponível no ambiente local desta entrega. Os testes de navegador e as auditorias Lighthouse/axe estão pendentes; não foram simulados.
+
+## Configuração de contato
+
+O telefone fica centralizado em `data-whatsapp-phone` no elemento `<html>` de cada página. Os CTAs trazem um `href` de fallback para o mesmo número e mensagens de contexto em `data-message`; `script.js` codifica a mensagem usando `encodeURIComponent`. A página também oferece o telefone como link `tel:`.
+
+## SEO e publicação futura
+
+Não há domínio confirmado. Portanto, não existe canonical, URL absoluta de compartilhamento nem sitemap. O `robots.txt` impede indexação nesta versão local e deve ser atualizado antes de qualquer publicação autorizada. O SVG Open Graph pode exigir uma versão PNG absoluta conforme a plataforma escolhida.
+
+Antes de publicar, escolher hospedagem, definir domínio, atualizar URLs sociais/metadados quando necessário, rever robots/sitemap e configurar cabeçalhos de segurança no host. HSTS depende de hospedagem HTTPS. O JSON-LD usa apenas nome, telefone e tipos de serviço confirmados; não declara endereço ou área de cobertura.
+
+## Pendências comerciais
+
+- Domínio e extensão definitivos.
+- Confirmação da área operacional e municípios atendidos.
+- Aprovação do logotipo proposto e dos textos pelo Ricardo.
+- Autorização específica para uso público das fotografias.
+- Confirmação de outros serviços além dos descritos.
+- Revisão da política de privacidade após definição do host e dos serviços de terceiros.
+- Validação comercial final.
+
+Não há Instagram, formulário, analytics, avaliações ou integrações externas nesta versão.
