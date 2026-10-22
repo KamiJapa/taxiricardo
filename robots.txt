@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /
-
-# Local review build. Revisit before public publication.
+Allow: /

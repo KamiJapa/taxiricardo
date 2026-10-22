@@ -1,11 +1,11 @@
 # Relatório de validação — Táxi Aeroporto · Ricardo
 
-**Data da revisão local:** 22/10/2026  
-**Status:** pronta para revisão local; publicação não autorizada e não realizada.
+**Data da revisão:** 22/10/2026  
+**Status:** publicada no Cloudflare Workers e no GitHub após autorização do usuário.
 
 ## 1. Resumo executivo
 
-Landing page estática criada na pasta `taxiRicardo`, sem alterações nos projetos Bolonha Marcenaria Artesanal ou taxiLuis. O conteúdo usa somente os dados confirmados no briefing. Nenhuma alteração remota, publicação, commit ou push foi executado.
+Landing page estática publicada em `https://taxi-aeroporto-ricardo.japa-kamitm.workers.dev` e no repositório `KamiJapa/taxiricardo`. O site usa projeto Worker exclusivo para Ricardo. O site salvo do Luís e o projeto Bolonha não foram alterados. O conteúdo usa somente os dados confirmados no briefing.
 
 ## 2. Estrutura e arquivos
 
@@ -24,7 +24,7 @@ Paleta usa verde-esmeralda, branco suave e carvão esverdeado. A marca tipográf
 
 ## 4. Fotografias
 
-As três fotos reais fornecidas foram usadas conforme a hierarquia solicitada: lateral/diagonal no hero, diagonal dianteira e frontal na galeria. Cópias WebP foram geradas localmente com Sharp, sem metadados. A placa foi desfocada nas três saídas e as imagens resultantes foram inspecionadas visualmente. Os arquivos originais permaneceram intactos na pasta temporária de origem e não foram enviados a serviços externos nem copiados para o projeto.
+As três fotos reais fornecidas foram usadas conforme a hierarquia solicitada: lateral/diagonal no hero, diagonal dianteira e frontal na galeria. Após autorização explícita do usuário para publicação, as cópias WebP foram enviadas ao GitHub e ao Cloudflare. As derivações não contêm metadados EXIF e as placas estão desfocadas. Os arquivos originais permaneceram intactos e não foram publicados.
 
 Pesos medidos após geração:
 
@@ -43,7 +43,7 @@ Número centralizado: `5517981012405`; telefone visível `+55 17 98101-2405`. Li
 
 ## 6. SEO
 
-Title, description, Open Graph, Twitter Cards, favicon, H1 único e JSON-LD `TaxiService` com telefone e tipos de serviço. Canonical e sitemap estão **PENDENTES** até existir domínio confirmado. `robots.txt` tem `Disallow: /` para impedir indexação da versão local e deve ser alterado antes de publicar. A imagem Open Graph está em SVG local; compatibilidade com redes sociais precisa ser confirmada e uma URL absoluta/PNG pode ser necessária após definir domínio.
+Title, description, Open Graph, Twitter Cards, favicon, H1 único e JSON-LD `TaxiService` com telefone e tipos de serviço. O site está publicado em subdomínio `workers.dev` e `robots.txt` permite rastreamento. Canonical, sitemap e URL absoluta de Open Graph estão **PENDENTES** até existir domínio próprio. A imagem Open Graph está em SVG local; compatibilidade com redes sociais precisa ser confirmada.
 
 ## 7. Acessibilidade
 
@@ -51,7 +51,7 @@ Implementados landmarks, link para pular conteúdo, foco visível, alt text, `<d
 
 ## 8. Segurança e privacidade
 
-Sem analytics, formulários, segredos ou dependências de runtime externas. Links WhatsApp usam `noopener noreferrer`. Política descreve o redirecionamento e informa que detalhes do host precisam de revisão. CSP, Referrer-Policy, X-Content-Type-Options e HSTS dependem da hospedagem e estão **PENDENTES**; nenhum arquivo de configuração de host foi adicionado.
+Sem analytics, formulários, segredos ou dependências de runtime externas. Links WhatsApp usam `noopener noreferrer`. Política descreve o redirecionamento e identifica a hospedagem Cloudflare. CSP, Referrer-Policy e X-Content-Type-Options ainda não foram configurados; HSTS é gerenciado conforme a hospedagem e o domínio.
 
 ## 9. Performance
 
@@ -70,6 +70,8 @@ Imagens WebP locais, dimensões explícitas, imagem hero prioritária, imagens a
 | Viewports listados no briefing | PENDENTE | Sem execução de browser local. |
 | Lighthouse / axe-core | PENDENTE | Ferramentas não disponíveis nesta revisão. |
 | Inspeção visual das placas | APROVADO | Três derivações WebP abertas após a máscara final; nenhuma placa legível. |
+| Deploy Cloudflare e páginas principais | APROVADO | `cf deploy` concluiu; `/`, `/privacidade.html` e uma foto retornaram HTTP 200. Worker exclusivo `taxi-aeroporto-ricardo`. |
+| Publicação no GitHub | APROVADO | Commit `f297aceedd62ee4e7a4601617f598df44472b133` publicado na branch `main`. |
 
 ## 11. Problemas e correções
 
@@ -86,7 +88,7 @@ Durante a primeira inspeção visual, as regiões de borrão ficaram fora das pl
 | FAQ | APROVADO — cinco perguntas, conteúdo de disponibilidade qualificado |
 | Navegação mobile | PENDENTE — validação real em browser |
 | CTA fixo em mobile | APROVADO — implementado em CSS/HTML; validação visual pendente |
-| Robots, title e description | APROVADO — robots bloqueia indexação local; revisar antes de publicar |
+| Robots, title e description | APROVADO — robots permite rastreamento; title/description publicados |
 | Open Graph/Twitter e favicon | PENDENTE — arquivos presentes; preview externo/URL definitiva pendentes |
 | Dados estruturados | PENDENTE — sintaxe e validação por ferramenta ainda não executadas |
 | Privacidade | APROVADO — texto coerente com versão local; revisão pré-publicação pendente |
@@ -96,4 +98,4 @@ Durante a primeira inspeção visual, as regiões de borrão ficaram fora das pl
 
 ## 13. Pendências comerciais e próximos passos
 
-Confirmar domínio/extensão, área operacional, municípios, aprovação do logotipo e textos, autorização para uso público das fotos, serviços adicionais e validação final do cliente. Depois disso, revisar canonical/OG absoluto, robots/sitemap, privacidade e cabeçalhos do host. Qualquer publicação exige autorização separada.
+Confirmar domínio próprio/extensão, área operacional, municípios, aprovação do logotipo e textos, serviços adicionais e validação comercial final. Depois, revisar canonical/OG absoluto, sitemap, privacidade e cabeçalhos de segurança. A autorização para publicar as fotos foi recebida e aplicada apenas às derivações WebP borradas.
