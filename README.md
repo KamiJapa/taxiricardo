@@ -1,64 +1,37 @@
 # Táxi Aeroporto — Ricardo
 
-Landing page estática para apresentação dos serviços e início de agendamentos pelo WhatsApp. Publicada em [taxi-aeroporto-ricardo.japa-kamitm.workers.dev](https://taxi-aeroporto-ricardo.japa-kamitm.workers.dev) e versionada em [KamiJapa/taxiricardo](https://github.com/KamiJapa/taxiricardo).
+Landing page estática em HTML5, Tailwind CSS 3.4.17 e JavaScript puro. Fotografias reais da Duster 2025, atendimento desde 2016 e WhatsApp +55 17 98101-2405. Atendimento 24h mediante agendamento e confirmação.
 
-## Stack e estrutura
+## Desenvolvimento
+Requisitos: Node.js 20+, npm 10+ e Python 3 para o servidor de prévia.
 
-- HTML semântico, CSS responsivo e JavaScript sem framework.
-- Tailwind CSS 3.4.17 para build de utilitários; estilos de apresentação próprios em `styles.css`.
-- Node.js para build e testes estáticos.
-- `assets/photos/`: derivações WebP das três fotos fornecidas. Placas borradas e metadados removidos localmente. Os originais não foram alterados nem copiados para o projeto.
-- `src/input.css`: entrada Tailwind.
-- `tests/static.test.mjs`: verificações estáticas de conteúdo, links, arquivos e requisitos básicos.
-- `index.html`, `privacidade.html` e `404.html`: páginas do site.
-- `RELATORIO_VALIDACAO_FINAL_RICARDO.md`: resultados e pendências desta revisão.
-
-## Requisitos
-
-- Node.js 20 ou superior.
-- npm 10 ou superior.
-
-## Instalação e execução local
-
-```bash
+```sh
 npm ci
-npm run dev
-```
-
-Sirva a pasta com qualquer servidor estático local. Não é necessário configurar credenciais ou serviços externos. Para gerar a folha Tailwind otimizada:
-
-```bash
 npm run build
-```
-
-**Limitação desta revisão:** o ambiente não conseguiu consultar `registry.npmjs.org` (`ENOTFOUND`) e não tinha metadados Tailwind no cache offline. Por isso, o `package-lock.json` ainda não foi gerado e `npm ci` não pode ser concluído aqui. O build foi executado com Tailwind já instalado no workspace pai; para instalação isolada, restaure o acesso ao registry, gere/valide o lockfile e repita `npm ci`.
-
-## Testes
-
-```bash
 npm run test:static
+npm run preview
 ```
 
-Playwright não está incluído como dependência porque não estava disponível no ambiente local desta entrega. Os testes de navegador e as auditorias Lighthouse/axe estão pendentes; não foram simulados.
-
-## Configuração de contato
-
-O telefone fica centralizado em `data-whatsapp-phone` no elemento `<html>` de cada página. Os CTAs trazem um `href` de fallback para o mesmo número e mensagens de contexto em `data-message`; `script.js` codifica a mensagem usando `encodeURIComponent`. A página também oferece o telefone como link `tel:`.
+Abra http://127.0.0.1:4173. Para acompanhar mudanças no Tailwind, execute `npm run dev` em outro terminal. Os estilos autorais estão em `styles.css`. Não é necessário instalar pacotes no diretório pai. O preview Python é um servidor local; não interpreta `_headers` nem reproduz automaticamente o roteamento 404 do Cloudflare.
 
 ## SEO e publicação
+`site.config.json` centraliza a URL pública. O build atualiza canonical, Open Graph, robots e sitemap. A URL `https://taxi-aeroporto-ricardo.japa-kamitm.workers.dev/` respondeu com a identidade e o contato corretos na revisão de 27/10/2026; ela é usada até eventual escolha de domínio próprio. `og-image.png` tem 1200×630 pixels, derivada da arte SVG local. Mudanças no domínio exigem editar a configuração e executar o build.
 
-O site está publicado no subdomínio padrão do Cloudflare Workers. `robots.txt` permite rastreamento. Canonical, sitemap e imagem Open Graph com URL absoluta ficam pendentes até a definição de um domínio próprio. O SVG Open Graph pode exigir uma versão PNG conforme a plataforma de compartilhamento.
+A versão revisada está publicada na URL acima. `_headers` foi verificado em produção, assim como a resposta HTTP 404 personalizada. `wrangler.jsonc` registra o Worker existente e serve somente `dist/`, gerado pelo build a partir de uma lista explícita de arquivos públicos.
 
-O JSON-LD usa apenas nome, telefone e tipos de serviço confirmados; não declara endereço ou área de cobertura. Cabeçalhos de segurança e política de privacidade devem ser revistos após a escolha de domínio próprio e eventuais serviços de terceiros.
+Para publicar uma revisão autorizada, autentique sua conta Cloudflare e execute:
 
-## Pendências comerciais
+```sh
+npx wrangler login --device
+npm run deploy
+```
 
-- Domínio e extensão definitivos.
-- Confirmação da área operacional e municípios atendidos.
-- Aprovação do logotipo proposto e dos textos pelo Ricardo.
-- Confirmação de outros serviços além dos descritos.
-- Aprovação do logotipo proposto e dos textos pelo Ricardo.
-- Revisão da política de privacidade após definição de domínio e serviços de terceiros.
-- Validação comercial final.
+Wrangler tem versão fixa no lockfile. Não salve tokens no repositório. Neste ambiente cloud, use `XDG_CONFIG_HOME=/workspace/.config` antes dos comandos Wrangler/deploy para reutilizar o login já autorizado. O GitHub é atualizado por commit/push; isso não substitui o deploy Cloudflare.
 
-Não há Instagram, formulário, analytics, avaliações ou integrações externas nesta versão.
+## Contato e comportamento
+Os links WhatsApp têm mensagem codificada no HTML e em `data-message`. O script preserva o mesmo telefone; não confirma reservas. Menu e FAQ usam `details` nativo, funcionando sem JavaScript. Escape fecha o menu com JavaScript e devolve o foco ao controle.
+
+## Evidências e pendências
+Veja `RELATORIO_VALIDACAO_FINAL_RICARDO.md` para resultados, limitações e comparação com Luís; `DM_SIGNATURE_STANDARD.md` documenta os critérios reutilizáveis.
+
+Pendências comerciais: aprovação de marca/textos, confirmação de cada destino atendido e eventual domínio próprio. A região geral São José do Rio Preto e região foi confirmada no último briefing. Não foram inventados aeroportos específicos, endereço, preços ou avaliações.

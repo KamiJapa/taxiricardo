@@ -12,6 +12,14 @@
     });
   });
 
+  const menu = document.querySelector('.mobile-nav');
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary').focus();
+    }
+  });
+
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
 })();
